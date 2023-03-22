@@ -66,23 +66,36 @@ class User{
     }
     
     static all(callback){
-        db.query('SELECT * from user', 
-        function(err, datas){
-            callback(datas.map((c)=>new User(c)))
+        db.query('SELECT * from users', (err, res) => {
+            callback(res.map((c)=>new User(c)));
+        })
+    }
+    static findById(id, callback){
+        db.query('SELECT * FROM users WHERE id=?', [id], (err, res) => {
+            callback(res.map((c)=>new User(c)));
+        })
+    }
+    static findByStatus(id, status, callback){
+        db.query('SELECT * FROM users WHERE id=? AND status=?', [id, status], (err, res) => {
+            callback(res.map((c)=>new User(c)));
         })
     }
     static create(firstname, lastname, status, active, callback){
-        db.query('INSERT INTO user(firstname, lastname, status, active) VALUES (?,?,?,?)', [firstname, lastname, status, active], (err, res)=>{
-            callback(res)
+        db.query('INSERT INTO users (firstname, lastname, status, active) VALUES (?,?,?,?)', [firstname, lastname, status, active], (err, res)=>{
+            callback(res);
+        })
+    }
+    static update(id, firstname,lastname, status,active, callback){
+        db.query("UPDATE users SET `firstname` = ? , `lastname` = ?,  `status` = ?, `active`= ? WHERE `id` = ? ", [firstname, lastname, status, active], (err, res)=>{
+            callback(res);
         })
     }
     //anonymisation
     static delete(id, callback){
         db.query("UPDATE user SET `active` = 0, `firstname` = 'anonymous', `lastname` = 'anonymous' WHERE `id` = ? ", [id], (err, res) => {
-            callback(res)
+            callback(res);
         })
     }
-
 
 }
 module.exports = User;

@@ -1,4 +1,6 @@
 const db = require('../config/database');
+const moment = require('moment');
+moment.locale('fr');
 
 class Service{
     constructor(c){
@@ -48,16 +50,32 @@ class Service{
     }
     
     static all(callback){
-        db.query('SELECT * from service', 
-        function(err, datas){
+        db.query('SELECT * from service', (err, datas) => {
             callback(datas.map((c)=>new Service(c)));
         })
     }
     static create(shiftType, shiftClosed, callback){
         db.query('INSERT INTO service (shiftType, shiftClosed) VALUES (?,?)', [shiftType, shiftClosed], (err, res) => {
-            callback(res)
+            callback(res);
         })
     }
+    static getService(id, callback){
+        db.query('SELECT * FROM service', (err, res) =>{
+            callback(res.map((c)=>new Service(c)));
+        })
+    }
+    static update(id, shiftClosed, callback){
+        db.query('UPDATE service SET shiftClosed = ? WHERE id = ?', [shiftClosed, id], (err, res) => {
+            callback(res);
+        })
+    }
+    static delete(id, callback){
+        db.query('DELETE FROM service WHERE id = ?', [id], (err, res) => {
+            callback(res);
+        })
+    }
+    
+
 
 }
 

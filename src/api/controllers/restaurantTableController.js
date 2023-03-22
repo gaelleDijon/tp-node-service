@@ -1,65 +1,65 @@
-const userModel = require('../models/userModel');
+const rtModel = require('../models/restaurantTableModel');
 
-exports.createUser = (req, res) => {
-    userModel.create((err, user) => {
+exports.createTable = (req, res) => {
+    rtModel.create((err, table) => {
         if(err){
             res.status(401);
             console.log(err);
             res.json({message: err});
         }else{
             res.status(201);
-            res.json(user);
+            res.json(table);
         }
     });
 }
-exports.getUser = (req, res) => {
-    userModel.findById(req.params.id, (err, user) => {
+exports.getTable = (req, res) => {
+    rtModel.getTable(req.params.id, (err, table) => {
         if(err){
             res.status(401);
             console.log(err);
             res.json({message: err});
         }else{
             res.status(201);
-            res.json(user);
-        }
-    });
-}
-
-exports.getUsersByStatus = (req, res) => {
-    userModel.findByStatus((err, users) => {
-        if(err){
-            res.status(401);
-            console.log(err);
-            res.json({message: err});
-        }else{
-            res.status(201);
-            res.json(users);
+            res.json(table);
         }
     });
 }
 
-exports.getAllUsers = (req, res) => {
-    userModel.all((err, users) => {
+exports.getAllTables = (req, res) => {
+    rtModel.all((err, tables) => {
         if(err){
             res.status(401);
             console.log(err);
             res.json({message: err});
         }else{
             res.status(201);
-            res.json(users);
+            res.json(tables);
         }
     });
 }
 
-exports.deleteUser = (req, res) => {
-    userModel.delete(req.params.id, (err, del) =>{
+exports.updateTable = (req, res) => {
+    rtModel.update(req.params.id,req.body.name, (err, table) => {
         if(err){
             res.status(401);
             console.log(err);
             res.json({message: err});
         }else{
             res.status(201);
-            res.json({message: `user anonymized: ${userModel.id}`, del});
+            res.json(table);
+        }
+    });
+}
+
+exports.deleteTable = (req, res) => {
+    rtModel.delete(req.params.id, (err, del) =>{
+        if(err){
+            res.status(401);
+            console.log(err);
+            res.json({message: err});
+        }else{
+            res.status(201);
+            res.json({message: del});
         }
     });
 }

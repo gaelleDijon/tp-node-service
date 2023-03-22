@@ -52,6 +52,11 @@ class Admin{
             callback(res);
         })
     }
+    static getAdmin(pincode, callback){
+        db.query('SELECT * FROM admin WHERE pincode LIKE ?', [pincode], (err, res)=>{
+            callback(res);
+        })
+    }
 
 }
 module.exports = Admin;

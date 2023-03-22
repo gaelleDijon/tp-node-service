@@ -1,7 +1,7 @@
-const serviceModel = require('../models/serviceModel');
+const suModel = require('../models/serviceUserModel');
 
-exports.createService = (req, res) => {
-    serviceModel.create(req.body.shiftType, 1, (err, serv) =>{
+exports.createServiceUser = (req, res) => {
+    suModel.create(req.body.id_service, req.body.id_user, (err, serv) =>{
         if(err){
             res.status(401);
             console.log(err);
@@ -14,8 +14,8 @@ exports.createService = (req, res) => {
     
 }
 
-exports.getService = (req, res) => {
-    serviceModel.getService(req.param.id, (err, serv) =>{
+exports.getServiceUser = (req, res) => {
+    suModel.getServiceUser(req.param.id, (err, serv) =>{
         if(err){
             res.status(401);
             console.log(err);
@@ -27,8 +27,8 @@ exports.getService = (req, res) => {
     })
 }
 
-exports.allServices = (req, res) => {
-    serviceModel.all(req.body.shiftType, 1, (err, serv) =>{
+exports.allServiceUsers = (req, res) => {
+    suModel.all((err, serv) =>{
         if(err){
             res.status(401);
             console.log(err);
@@ -40,8 +40,8 @@ exports.allServices = (req, res) => {
     })
 }
 
-exports.updateService = (req, res) => {
-    serviceModel.update(req.param.id, req.body.shiftClosed, (err, serv) =>{
+exports.updateServiceUser = (req, res) => {
+    suModel.update(req.body.id_service, req.body.id_user, (err, serv) =>{
         if(err){
             res.status(401);
             console.log(err);
@@ -53,15 +53,15 @@ exports.updateService = (req, res) => {
     })
 }
 
-exports.deleteService = (req, res) => {
-    serviceModel.delete(req.param.id, (err, resp) =>{
+exports.deleteServiceUser = (req, res) => {
+    suModel.delete(req.body.id_service, req.body.id_user, (err, serv) =>{
         if(err){
             res.status(401);
             console.log(err);
             res.json({message: err});
         }else{
             res.status(200);
-            res.json(resp);
+            res.json(serv);
         }
     })
 }

@@ -1,4 +1,4 @@
-#Contribute to this project 
+#Contribute to this project
 
 ##Make Changes locally
 Fork the repository and install node.js, make sure to add the dependencies (nodemon, express, moment, mysql).
@@ -8,3 +8,5 @@ Create a working branch and start with your changes
 ##Commit your upgrade
 
 ##Pull Request (PR)
+Create a pull request
+Link PR to issue if you are solving one

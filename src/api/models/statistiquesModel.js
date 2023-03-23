@@ -5,14 +5,18 @@ const db = require('../config/database');
 
 class Statistiques{
     static allTipsByMonth(dateM, callback){
-        db.query('SELECT * FROM ', (err, res) => {
-            callback(res.map((c)=>new User(c)));
+        db.query("SELECT SUM(tips) AS sum_month FROM tabletips WHERE created_at LIKE '%-?-%' ",[] , (err, res) => {
+            callback(res.map((c)=>new Statistiques(c)));
         })
     }
-    static allTipsByUser(id, callback){
-
+    static allTipsByTable(id, callback){
+        db.query("SELECT SUM(tips) AS sum_table FROM tabletips WHERE id_restaurantTable LIKE ? ", [id], (err, res) => {
+            callback(res.map((c)=>new Statistiques(c)));
+        })
     }
-    static userMonthlytips(id, dateM, callback){
-
+    static allUserTips(id, callback){
+        db.query("SELECT SUM(amount) AS amount FROM tipspayments WHERE id_user LIKE ? ",[id] , (err, res) => {
+            callback(res.map((c)=>new Statistiques(c)));
+        })
     }
 }
